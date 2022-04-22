@@ -101,12 +101,12 @@ program main
 
     ! read in binary raster containing ICM-Hydro compartment ID value for each DEM pixel location
     allocate(dem_comp(ndem))
-    open(unit=105, file = trim(adjustL(comp_file)),form='unformatted') )
+    open(unit=105, file = trim(adjustL(comp_file)),form='unformatted') 
     read(105) dem_comp
     close(105)
     
     ! write output CSV file
-    open(unit=200, file = trim(adjustL(out_file) )
+    open(unit=200, file = trim(adjustL(out_file) ) )
     write(200,'(A)') 'ndem,ICM_LAVegMod_GridCell,ICM_Hydro_Compartment,landtype,edge,z_NAVD88_m'
     do i = 1,ndem
         write(200,2000) i,dem_grid(i),dem_comp(i),dem_lndtyp(i),dem_edge(i),dem_z(i)
