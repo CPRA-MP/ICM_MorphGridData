@@ -44,6 +44,7 @@ program main
     character*20 :: noData_str                                      ! string storing the value representing NoData in input XYZ rasters - passed in from shell
     
     ! define variables used by main program
+    integer :: i                                                    ! iterator
     integer :: ndem                                                 ! number of DEM pixels in master DEM
     integer :: dem_NoDataVal                                        ! value representing NoData in input XYZ rasters
     
