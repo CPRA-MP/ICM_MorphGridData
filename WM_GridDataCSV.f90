@@ -101,7 +101,7 @@ program main
 
     ! read in binary raster containing ICM-Hydro compartment ID value for each DEM pixel location
     allocate(dem_comp(ndem))
-    open(unit=105, file = trim(adjustL(comp_file)),form='unformatted')
+    open(unit=105, file = trim(adjustL(comp_file)),form='unformatted') )
     read(105) dem_comp
     close(105)
     
