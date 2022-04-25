@@ -108,7 +108,7 @@ for c in range(1,ncomp+1):
     comp_pct_upland_all[c] = []   
     comp_pct_upland[c] = 0.0   
 
-fivepct = range(1,ndem,int(np.floor(ndem/20))
+fivepct = range(1,ndem,int(np.floor(ndem/20)))
 
 with open(out_file,mode='r') as grid_data:
     nline = 0
