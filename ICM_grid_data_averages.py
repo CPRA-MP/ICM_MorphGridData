@@ -187,7 +187,7 @@ for c in range(1,ncomp+1):
         
 
 
-new_grid_filepath  = 'hydro/TempFiles/grid_data_500m_end%s.csv'
+new_grid_filepath  = 'hydro/TempFiles/grid_data_500m_end%d.csv' % year
 comp_elev_file     = 'hydro/TempFiles/compelevs_end_%d.csv' % year
 comp_wat_file      = 'hydro/TempFiles/PctWater_%d.csv' % year
 comp_upl_file      = 'hydro/TempFiles/PctUpland_%d.csv' % year
