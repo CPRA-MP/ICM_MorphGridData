@@ -216,7 +216,7 @@ with open(comp_elev_file,mode='w') as cef:
 
 with open(comp_wat_file, mode='w') as cwf:
     print('     - %s' % comp_wat_file)
-    for c in comp_wat_upland.keys():
+    for c in comp_pct_water.keys():
         cwf.write( '%d,%0.4f\n' % (c,comp_pct_water[c]) )
 
 with open(comp_upl_file, mode='w') as cuf:
