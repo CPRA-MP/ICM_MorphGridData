@@ -13,7 +13,7 @@ startyear = 2019
 year = int(sys.argv[3])
 elapsedyear = year - startyear +1
 
-print('\nPreparing summary files for grid and compartment zonal statistics.')
+print('\nPreparing summary files for grid and compartment zonal statistics for %s %s - %d' % sterm, gterm,year)
 
 par_dir = os.getcwd()
 
@@ -36,7 +36,8 @@ n500grid = 173898
 ncomp = 1778
         
 fortran_run = subprocess.call([MorphGridData_exe_path, dem_file, lwf_file, edge_file, grid_file, comp_file, str(ndem), str(dem_NoDataVal),out_file])
-
+print('Finished running %s.' % MorphGridData_exe_path)
+print('Reading in %s.' % out_file)
 
 grid_bed_z_all = {}
 grid_bed_z = {} 
@@ -116,23 +117,27 @@ with open(out_file,mode='r') as grid_data:
             edge   = int(float(line.split(',')[4]))
             elev   = float(line.split(',')[5])
             
-            if lndtyp == 2:
-                grid_bed_z_all[g].append(elev)
-                grid_pct_water_all[g].append(1)
-                comp_water_z_all[c].append(elev)
-                comp_pct_water_all[c].append(1)
-            else:
-                grid_land_z_all[g].append(elev)
-                grid_pct_land_all[g].append(1)
-                if lndtyp != 4:     # check if upland/developed
-                    grid_pct_land_wetl_all[g].append(1)
-                    comp_wetland_z_all[c].append(elev)
+            if g > 0:
+                grid_pct_edge_all[g].append(edge)
+                if lndtyp == 2:
+                    grid_bed_z_all[g].append(elev)
+                    grid_pct_water_all[g].append(1)
                 else:
-                    comp_pct_upland_all[c].append(1)
-        
-            grid_pct_edge_all[g].append(edge)    
-            comp_edge_area_all[c].append(edge*dem_res*dem_res)
-            
+                    grid_land_z_all[g].append(elev)
+                    grid_pct_land_all[g].append(1)
+                    if lndtyp != 4:     # check if upland/developed
+                        grid_pct_land_wetl_all[g].append(1)
+                        
+            if c > 0:
+                comp_edge_area_all[c].append(edge*dem_res*dem_res)
+                if lndtyp == 2:
+                    comp_water_z_all[c].append(elev)
+                    comp_pct_water_all[c].append(1)
+                else:
+                    if lndtyp != 4:     # check if upland/developed
+                        comp_wetland_z_all[c].append(elev)
+                    else:
+                        comp_pct_upland_all[c].append(1)
         nline += 1
 
 for g in range(1,n500grid+1):
@@ -181,26 +186,31 @@ grid_pct_edge_file = 'hsi/%s_W_pedge.csv' % file_prefix
 
 grid_data_file     = new_grid_filepath  
 
-
+print('Writing output files:')
 with open(grid_data_file,mode='w') as gdaf:  
+    print('     - %s' % grid_data_file)
     gdaf.write('GRID,MEAN_BED_ELEV,MEAN_LAND_ELEV,PERCENT_LAND_0-100,PERCENT_WETLAND_0-100,PERCENT_WATER_0-100\n')
     for g in grid_bed_z.keys():
         gdaf.write('%d,%0.4f,%0.4f,%0.2f,%0.2f,%0.2f\n' % (g,grid_bed_z[g],grid_land_z[g],grid_pct_land[g],grid_pct_land_wetl[g],grid_pct_water[g]) )
     
 with open(grid_pct_edge_file,mode='w') as gdef:  
+print('     - %s' % grid_pct_edge_file)
     gdef.write('GRID,PERCENT_EDGE_0-100\n')
     for g in grid_pct_edge.keys():
         gdef.write('%d,%0.4f' % (g,grid_pct_edge[g]) )
       
 with open(comp_elev_file,mode='w') as cef:
+print('     - %s' % comp_elev_file)
     cef.write('ICM_ID,MEAN_BED_ELEV,MEAN_MARSH_ELEV,MARSH_EDGE_AREA\n')
     for c in comp_water_z.keys():
         cef.write('%d,%0.4f,%0.4f,%d\n' % (c,comp_water_z[c],comp_wetland_z[c],comp_edge_area[c]) )
 
 with open(comp_wat_file, mode='w') as cwf:
+    print('     - %s' % comp_wat_file)
     for c in comp_wat_upland.keys():
         cwf.write( '%d,%0.4f\n' % (c,comp_pct_water[c]) )
 
 with open(comp_upl_file, mode='w') as cuf:
+    print('     - %s' % comp_upl_file)
     for c in comp_pct_upland.keys():
         cuf.write( '%d,%0.4f\n' % (c,comp_pct_upland[c]) )
