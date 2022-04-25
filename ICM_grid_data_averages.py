@@ -8,9 +8,9 @@ cterm = 'C000'
 uterm = 'U00'
 vterm = 'V00'
 rterm = 'SLA'
-
+startyear = 2019
 year = int(sys.argv[3])
-
+elapsedyear = year - startyear +1
 
 print('\nPreparing summary files for grid and compartment zonal statistics.')
 
@@ -145,7 +145,13 @@ for g in range(1,n500grid+1):
         grid_pct_water[g]      = 100.0*sum(grid_pct_water_all[g]) / ng
         grid_pct_edge[g]       = 100.0*sum(grid_pct_edge_all[g]) / ng
     else:
-        grid_bed_z[g] = 0.0
+        grid_bed_z[g]          = 0.0
+        grid_land_z[g]         = 0.0
+        grid_pct_land[g]       = 0.0
+        grid_pct_land_wetl[g]  = 0.0
+        grid_pct_water[g]      = 0.0
+        grid_pct_edge[g]       = 0.0
+
 
 
 for c in range(1,ncomp+1):    
