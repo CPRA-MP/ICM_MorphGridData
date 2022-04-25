@@ -13,7 +13,7 @@ startyear = 2019
 year = int(sys.argv[3])
 elapsedyear = year - startyear +1
 
-print('\nPreparing summary files for grid and compartment zonal statistics for %s %s - %d' % sterm, gterm,year)
+print('\nPreparing summary files for grid and compartment zonal statistics for %s %s - %d' % (sterm, gterm,year) )
 
 par_dir = os.getcwd()
 
