@@ -107,10 +107,18 @@ for c in range(1,ncomp+1):
     comp_pct_upland_all[c] = []   
     comp_pct_upland[c] = 0.0   
 
+fivepct = range(1,ndem,int(np.floor(ndem/20))
+
 with open(out_file,mode='r') as grid_data:
     nline = 0
     for line in grid_data:
         if nline > 0:   # header: ndem,ICM_LAVegMod_GridCell,ICM_Hydro_Compartment,landtype,edge,z_NAVD88_m
+            if nline in fivepct:
+                print('%d%s...' % (fivepct.index(nline)*5,'%'),end="")
+            else if:
+                nline == ndem:
+                    print('100%. Done.')
+            
             g     = int(float(line.split(',')[1]))
             c   = int(float(line.split(',')[2]))
             lndtyp = int(float(line.split(',')[3]))
