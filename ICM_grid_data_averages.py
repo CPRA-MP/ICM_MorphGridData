@@ -194,13 +194,13 @@ with open(grid_data_file,mode='w') as gdaf:
         gdaf.write('%d,%0.4f,%0.4f,%0.2f,%0.2f,%0.2f\n' % (g,grid_bed_z[g],grid_land_z[g],grid_pct_land[g],grid_pct_land_wetl[g],grid_pct_water[g]) )
     
 with open(grid_pct_edge_file,mode='w') as gdef:  
-print('     - %s' % grid_pct_edge_file)
+    print('     - %s' % grid_pct_edge_file)
     gdef.write('GRID,PERCENT_EDGE_0-100\n')
     for g in grid_pct_edge.keys():
         gdef.write('%d,%0.4f' % (g,grid_pct_edge[g]) )
       
 with open(comp_elev_file,mode='w') as cef:
-print('     - %s' % comp_elev_file)
+    print('     - %s' % comp_elev_file)
     cef.write('ICM_ID,MEAN_BED_ELEV,MEAN_MARSH_ELEV,MARSH_EDGE_AREA\n')
     for c in comp_water_z.keys():
         cef.write('%d,%0.4f,%0.4f,%d\n' % (c,comp_water_z[c],comp_wetland_z[c],comp_edge_area[c]) )
