@@ -35,7 +35,7 @@ dem_res = 30
 n500grid = 173898
 ncomp = 1778
         
-fortran_run = subprocess.call([MorphGridData_exe_path, dem_file, lwf_file, edge_file, grid_file, comp_file, str(ndem), str(dem_NoDataVal)])
+fortran_run = subprocess.call([MorphGridData_exe_path, dem_file, lwf_file, edge_file, grid_file, comp_file, str(ndem), str(dem_NoDataVal),out_file])
 
 
 grid_bed_z_all = {}
