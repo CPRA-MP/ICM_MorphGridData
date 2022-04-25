@@ -187,11 +187,11 @@ for c in range(1,ncomp+1):
         
 
 
-new_grid_filepath  = 'hydro/TempFiles/grid_data_500m_end%d.csv' % year
-comp_elev_file     = 'hydro/TempFiles/compelevs_end_%d.csv' % year
-comp_wat_file      = 'hydro/TempFiles/PctWater_%d.csv' % year
-comp_upl_file      = 'hydro/TempFiles/PctUpland_%d.csv' % year
-grid_pct_edge_file = 'hsi/%s_W_pedge.csv' % file_prefix
+new_grid_filepath  = '%s/%s/%s/hydro/TempFiles/grid_data_500m_end%d.csv' % (par_dir, sterm, gterm, year)
+comp_elev_file     = '%s/%s/%s/hydro/TempFiles/compelevs_end_%d.csv' % (par_dir, sterm, gterm, year)
+comp_wat_file      = '%s/%s/%s/hydro/TempFiles/PctWater_%d.csv' % (par_dir, sterm, gterm, year)
+comp_upl_file      = '%s/%s/%s/hydro/TempFiles/PctUpland_%d.csv' % (par_dir, sterm, gterm, year)
+grid_pct_edge_file = '%s/%s/%s/hsi/%s_W_pedge.csv' % (par_dir, sterm, gterm, file_prefix)
 
 grid_data_file     = new_grid_filepath  
 
