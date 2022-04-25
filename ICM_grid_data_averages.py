@@ -1,5 +1,6 @@
 import os
 import sys
+import subprocess
 
 mpterm = 'MP2023'
 sterm = 'S%02d' % int(sys.argv[1])
@@ -16,25 +17,25 @@ print('\nPreparing summary files for grid and compartment zonal statistics.')
 
 par_dir = os.getcwd()
 
-MorphGridData_exe_path = '%s/%s/%s/geomorph/morph_grid_data_v23.0.0' % (par_dir, sterm, gterm)
+MorphGridData_exe_path = './morph_grid_data_v23.0.0'
 
 runprefix    = '%s_%s_%s_%s_%s_%s_%s'   % (mpterm,sterm,gterm,cterm,uterm,vterm,rterm)        
 file_oprefix = '%s_O_%02d_%02d'         % (runprefix,elapsedyear,elapsedyear)        
 file_prefix  = '%s_N_%02d_%02d'         % (runprefix,elapsedyear,elapsedyear)
 
-dem_file  = '%s/%s/%s/geomorph/output/%s_O_%02d_%02d_W_dem30.xyz.b'                         % (par_dir, sterm, gterm, runprefix)
-lwf_file  = '%s/%s/%s/geomorph/output/%s_O_%02d_%02d_W_lndtyp30.xyz.b'                      % (par_dir, sterm, gterm, runprefix)
-edge_file = '%s/%s/%s/geomorph/output/%s_O_%02d_%02d_W_edge30.xyz.b'                        % (par_dir, sterm, gterm, runprefix)
+dem_file  = '%s/%s/%s/geomorph/output/%s_N_%02d_%02d_W_dem30.xyz.b'                         % (par_dir, sterm, gterm, runprefix,elapsedyear,elapsedyear)
+lwf_file  = '%s/%s/%s/geomorph/output/%s_N_%02d_%02d_W_lndtyp30.xyz.b'                      % (par_dir, sterm, gterm, runprefix,elapsedyear,elapsedyear)
+edge_file = '%s/%s/%s/geomorph/output/%s_N_%02d_%02d_W_edge30.xyz.b'                        % (par_dir, sterm, gterm, runprefix,elapsedyear,elapsedyear)
 grid_file = '%s/%s/%s/geomorph/input/MP2023_S00_G000_C000_U00_V00_SLA_I_00_00_W_grid30.xyz' % (par_dir, sterm, gterm)
 comp_file = '%s/%s/%s/geomorph/input/MP2023_S00_G000_C000_U00_V00_SLA_I_00_00_W_comp30.xyz' % (par_dir, sterm, gterm)
-out_file  = '%s/%s/%s/geomorph/output/%s_O_%02d_%02d_W_grid_data.csv'                       % (par_dir, sterm, gterm, runprefix)
+out_file  = '%s/%s/%s/geomorph/output/%s_N_%02d_%02d_W_grid_data.csv'                       % (par_dir, sterm, gterm, runprefix,elapsedyear,elapsedyear)
 ndem = 171284090
 dem_NoDataVal = -9999
 dem_res = 30
 n500grid = 173898
 ncomp = 1778
         
-fortran_run = subprocess.call([MorphGridData_exe_path, dem_file, lwf_file, edge_file, grid_file, comp_file, ndem, dem_NoDataVal])
+fortran_run = subprocess.call([MorphGridData_exe_path, dem_file, lwf_file, edge_file, grid_file, comp_file, str(ndem), str(dem_NoDataVal)])
 
 
 grid_bed_z_all = {}
@@ -113,7 +114,7 @@ with open(out_file,mode='r') as grid_data:
             c   = int(float(line.split(',')[2]))
             lndtyp = int(float(line.split(',')[3]))
             edge   = int(float(line.split(',')[4]))
-            elev   = float(line.split(',')[5]))
+            elev   = float(line.split(',')[5])
             
             if lndtyp == 2:
                 grid_bed_z_all[g].append(elev)
@@ -123,7 +124,7 @@ with open(out_file,mode='r') as grid_data:
             else:
                 grid_land_z_all[g].append(elev)
                 grid_pct_land_all[g].append(1)
-                if lndtyp <> 4:     # check if upland/developed
+                if lndtyp != 4:     # check if upland/developed
                     grid_pct_land_wetl_all[g].append(1)
                     comp_wetland_z_all[c].append(elev)
                 else:
