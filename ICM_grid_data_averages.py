@@ -150,7 +150,7 @@ with open(out_file,mode='r') as grid_data:
         nline += 1
 
 for g in range(1,n500grid+1):
-    ng = len(grid_bed_z_all[g])
+    ng = len(grid_bed_z_all[g]) + len(grid_land_z_all[g])
     
     if ng > 0:
         grid_bed_z[g]          = sum(grid_bed_z_all[g]) / ng
