@@ -44,8 +44,9 @@ MtD_bin_n = 9     # number of water depth bins used by Mottled Duck HSI
 fortran_run = subprocess.call([MorphGridData_exe_path, dem_file, lwf_file, edge_file, grid_file, comp_file, str(ndem), str(dem_NoDataVal),out_file])
 print('Finished running %s.' % MorphGridData_exe_path)
 
-print('Reading in %s.' % monthly_stg_file)
 monthly_stg_file = '%s/%s/%s/hydro/TempFiles/compartment_monthly_mean_stage_%04d.csv'  % (par_dir, sterm, gterm, year)
+print('Reading in %s.' % monthly_stg_file)
+
 # comp,stage_m_01,stage_m_02,stage_m_03,stage_m_04,stage_m_05,stage_m_06,stage_m_07,stage_m_08,stage_m_09,stage_m_10,stage_m_11,stage_m_12
 comp_mon_stg = {}
 with open(monthly_stg_file,mode='r') as comp_stg_data:
@@ -186,79 +187,80 @@ with open(out_file,mode='r') as grid_data:
                 
                
                 if c > 0:
-                    dep_oct_apr = (comp_mon_stg[c][1]+comp_mon_stg[c][2]+comp_mon_stg[c][3]+comp_mon_stg[c][4]+comp_mon_stg[c][10]+comp_mon_stg[c][11]+comp_mon_stg[c][12])/7.0
-                    dep_sep_mar = (comp_mon_stg[c][1]+comp_mon_stg[c][2]+comp_mon_stg[c][3]+comp_mon_stg[c][9]+comp_mon_stg[c][10]+comp_mon_stg[c][11]+comp_mon_stg[c][12])/7.0
-                    dep_ann     = (comp_mon_stg[c][1]+comp_mon_stg[c][2]+comp_mon_stg[c][3]+comp_mon_stg[c][4]+comp_mon_stg[c][5]+comp_mon_stg[c][6]+comp_mon_stg[c][7]+comp_mon_stg[c][8]+comp_mon_stg[c][9]+comp_mon_stg[c][10]+comp_mon_stg[c][11]+comp_mon_stg[c][12])/12.0
-                    
-                    # tabulate area of grid cell within each Gadwall depth bin; depth thresholds (in m) are: [0,0.04,0.08,0.12,0.18,0.22,0.28,0.32,0.36,0.40,0.44,0.78,1.50]     
-                    if dep_oct_apr <= 0.0:
-                        grid_Gdw_depths[g][1]  = grid_Gdw_depths[g][1] + dem_res**2
-                    elif dep_oct_apr <= 0.04:
-                        grid_Gdw_depths[g][2]  = grid_Gdw_depths[g][2] + dem_res**2
-                    elif dep_oct_apr <= 0.08:
-                        grid_Gdw_depths[g][3]  = grid_Gdw_depths[g][3] + dem_res**2
-                    elif dep_oct_apr <= 0.12:
-                        grid_Gdw_depths[g][4]  = grid_Gdw_depths[g][4] + dem_res**2
-                    elif dep_oct_apr <= 0.18:
-                        grid_Gdw_depths[g][5]  = grid_Gdw_depths[g][5] + dem_res**2
-                    elif dep_oct_apr <= 0.22:
-                        grid_Gdw_depths[g][6]  = grid_Gdw_depths[g][6] + dem_res**2
-                    elif dep_oct_apr <= 0.28:
-                        grid_Gdw_depths[g][7]  = grid_Gdw_depths[g][7] + dem_res**2
-                    elif dep_oct_apr <= 0.32:
-                        grid_Gdw_depths[g][8]  = grid_Gdw_depths[g][8] + dem_res**2
-                    elif dep_oct_apr <= 0.36:
-                        grid_Gdw_depths[g][9]  = grid_Gdw_depths[g][9] + dem_res**2
-                    elif dep_oct_apr <= 0.40:
-                        grid_Gdw_depths[g][10] = grid_Gdw_depths[g][10] + dem_res**2
-                    elif dep_oct_apr <= 0.44:
-                        grid_Gdw_depths[g][11] = grid_Gdw_depths[g][11] + dem_res**2
-                    elif dep_oct_apr <= 0.78:
-                        grid_Gdw_depths[g][12] = grid_Gdw_depths[g][12] + dem_res**2
-                    elif dep_oct_apr <= 1.50:
-                        grid_Gdw_depths[g][13] = grid_Gdw_depths[g][13] + dem_res**2
-                    else
-                        grid_Gdw_depths[g][14] = grid_Gdw_depths[g][14] + dem_res**2
-                    
-                    # tabulate area of grid cell within each Greenwing Teal depth bin; depth thresholds (in m) are: [0,0.06,0.18,0.22,0.26,0.30,0.34,1.0]
-                    if dep_sep_mar <= 0.0:
-                        grid_GwT_depths[g][1] = grid_GwT_depths[g][1] + dem_res**2
-                    elif dep_sep_mar <= 0.06:
-                        grid_GwT_depths[g][2] = grid_GwT_depths[g][2] + dem_res**2
-                    elif dep_sep_mar <= 0.18:
-                        grid_GwT_depths[g][3] = grid_GwT_depths[g][3] + dem_res**2
-                    elif dep_sep_mar <= 0.22:
-                        grid_GwT_depths[g][4] = grid_GwT_depths[g][4] + dem_res**2
-                    elif dep_sep_mar <= 0.26:
-                        grid_GwT_depths[g][5] = grid_GwT_depths[g][5] + dem_res**2
-                    elif dep_sep_mar <= 0.30:
-                        grid_GwT_depths[g][6] = grid_GwT_depths[g][6] + dem_res**2
-                    elif dep_sep_mar <= 0.34:
-                        grid_GwT_depths[g][7] = grid_GwT_depths[g][7] + dem_res**2
-                    elif dep_sep_mar <= 1.0:
-                        grid_GwT_depths[g][8] = grid_GwT_depths[g][8] + dem_res**2
-                    else
-                        grid_GwT_depths[g][9] = grid_GwT_depths[g][9] + dem_res**2
-                       
-                    # tabulate area of grid cell within each Mottled Duck depth bin; depth thresholds (in m) are: [0,0.08,0.30,0.36,0.42,0.46,0.50,0.56]
-                    if dep_ann <= 0.0:        
-                        grid_MtD_depths[g][1] = grid_MtD_depths[g][1] + dem_res**2
-                    elif dep_ann <= 0.08:            
-                        grid_MtD_depths[g][2] = grid_MtD_depths[g][2] + dem_res**2
-                    elif dep_ann <= 0.30:            
-                        grid_MtD_depths[g][3] = grid_MtD_depths[g][3] + dem_res**2
-                    elif dep_ann <= 0.36:            
-                        grid_MtD_depths[g][4] = grid_MtD_depths[g][4] + dem_res**2
-                    elif dep_ann <= 0.42:            
-                        grid_MtD_depths[g][5] = grid_MtD_depths[g][5] + dem_res**2
-                    elif dep_ann <= 0.46:            
-                        grid_MtD_depths[g][6] = grid_MtD_depths[g][6] + dem_res**2
-                    elif dep_ann <= 0.50] then            
-                        grid_MtD_depths[g][7] = grid_MtD_depths[g][7] + dem_res**2
-                    elif dep_ann <= 0.56:            
-                        grid_MtD_depths[g][8] = grid_MtD_depths[g][8] + dem_res**2
-                    else
-                        grid_MtD_depths[g][9] = grid_MtD_depths[g][9] + dem_res**2
+                    if elev > -9999:
+                        dep_oct_apr = (comp_mon_stg[c][1]+comp_mon_stg[c][2]+comp_mon_stg[c][3]+comp_mon_stg[c][4]+comp_mon_stg[c][10]+comp_mon_stg[c][11]+comp_mon_stg[c][12])/7.0 - elev
+                        dep_sep_mar = (comp_mon_stg[c][1]+comp_mon_stg[c][2]+comp_mon_stg[c][3]+comp_mon_stg[c][9]+comp_mon_stg[c][10]+comp_mon_stg[c][11]+comp_mon_stg[c][12])/7.0 - elev 
+                        dep_ann     = (comp_mon_stg[c][1]+comp_mon_stg[c][2]+comp_mon_stg[c][3]+comp_mon_stg[c][4]+comp_mon_stg[c][5]+comp_mon_stg[c][6]+comp_mon_stg[c][7]+comp_mon_stg[c][8]+comp_mon_stg[c][9]+comp_mon_stg[c][10]+comp_mon_stg[c][11]+comp_mon_stg[c][12])/12.0 - elev
+                        
+                        # tabulate area of grid cell within each Gadwall depth bin; depth thresholds (in m) are: [0,0.04,0.08,0.12,0.18,0.22,0.28,0.32,0.36,0.40,0.44,0.78,1.50]     
+                        if dep_oct_apr <= 0.0:
+                            grid_Gdw_depths[g][1]  = grid_Gdw_depths[g][1] + dem_res**2
+                        elif dep_oct_apr <= 0.04:
+                            grid_Gdw_depths[g][2]  = grid_Gdw_depths[g][2] + dem_res**2
+                        elif dep_oct_apr <= 0.08:
+                            grid_Gdw_depths[g][3]  = grid_Gdw_depths[g][3] + dem_res**2
+                        elif dep_oct_apr <= 0.12:
+                            grid_Gdw_depths[g][4]  = grid_Gdw_depths[g][4] + dem_res**2
+                        elif dep_oct_apr <= 0.18:
+                            grid_Gdw_depths[g][5]  = grid_Gdw_depths[g][5] + dem_res**2
+                        elif dep_oct_apr <= 0.22:
+                            grid_Gdw_depths[g][6]  = grid_Gdw_depths[g][6] + dem_res**2
+                        elif dep_oct_apr <= 0.28:
+                            grid_Gdw_depths[g][7]  = grid_Gdw_depths[g][7] + dem_res**2
+                        elif dep_oct_apr <= 0.32:
+                            grid_Gdw_depths[g][8]  = grid_Gdw_depths[g][8] + dem_res**2
+                        elif dep_oct_apr <= 0.36:
+                            grid_Gdw_depths[g][9]  = grid_Gdw_depths[g][9] + dem_res**2
+                        elif dep_oct_apr <= 0.40:
+                            grid_Gdw_depths[g][10] = grid_Gdw_depths[g][10] + dem_res**2
+                        elif dep_oct_apr <= 0.44:
+                            grid_Gdw_depths[g][11] = grid_Gdw_depths[g][11] + dem_res**2
+                        elif dep_oct_apr <= 0.78:
+                            grid_Gdw_depths[g][12] = grid_Gdw_depths[g][12] + dem_res**2
+                        elif dep_oct_apr <= 1.50:
+                            grid_Gdw_depths[g][13] = grid_Gdw_depths[g][13] + dem_res**2
+                        else
+                            grid_Gdw_depths[g][14] = grid_Gdw_depths[g][14] + dem_res**2
+                        
+                        # tabulate area of grid cell within each Greenwing Teal depth bin; depth thresholds (in m) are: [0,0.06,0.18,0.22,0.26,0.30,0.34,1.0]
+                        if dep_sep_mar <= 0.0:
+                            grid_GwT_depths[g][1] = grid_GwT_depths[g][1] + dem_res**2
+                        elif dep_sep_mar <= 0.06:
+                            grid_GwT_depths[g][2] = grid_GwT_depths[g][2] + dem_res**2
+                        elif dep_sep_mar <= 0.18:
+                            grid_GwT_depths[g][3] = grid_GwT_depths[g][3] + dem_res**2
+                        elif dep_sep_mar <= 0.22:
+                            grid_GwT_depths[g][4] = grid_GwT_depths[g][4] + dem_res**2
+                        elif dep_sep_mar <= 0.26:
+                            grid_GwT_depths[g][5] = grid_GwT_depths[g][5] + dem_res**2
+                        elif dep_sep_mar <= 0.30:
+                            grid_GwT_depths[g][6] = grid_GwT_depths[g][6] + dem_res**2
+                        elif dep_sep_mar <= 0.34:
+                            grid_GwT_depths[g][7] = grid_GwT_depths[g][7] + dem_res**2
+                        elif dep_sep_mar <= 1.0:
+                            grid_GwT_depths[g][8] = grid_GwT_depths[g][8] + dem_res**2
+                        else
+                            grid_GwT_depths[g][9] = grid_GwT_depths[g][9] + dem_res**2
+                        
+                        # tabulate area of grid cell within each Mottled Duck depth bin; depth thresholds (in m) are: [0,0.08,0.30,0.36,0.42,0.46,0.50,0.56]
+                        if dep_ann <= 0.0:        
+                            grid_MtD_depths[g][1] = grid_MtD_depths[g][1] + dem_res**2
+                        elif dep_ann <= 0.08:            
+                            grid_MtD_depths[g][2] = grid_MtD_depths[g][2] + dem_res**2
+                        elif dep_ann <= 0.30:            
+                            grid_MtD_depths[g][3] = grid_MtD_depths[g][3] + dem_res**2
+                        elif dep_ann <= 0.36:            
+                            grid_MtD_depths[g][4] = grid_MtD_depths[g][4] + dem_res**2
+                        elif dep_ann <= 0.42:            
+                            grid_MtD_depths[g][5] = grid_MtD_depths[g][5] + dem_res**2
+                        elif dep_ann <= 0.46:            
+                            grid_MtD_depths[g][6] = grid_MtD_depths[g][6] + dem_res**2
+                        elif dep_ann <= 0.50] then            
+                            grid_MtD_depths[g][7] = grid_MtD_depths[g][7] + dem_res**2
+                        elif dep_ann <= 0.56:            
+                            grid_MtD_depths[g][8] = grid_MtD_depths[g][8] + dem_res**2
+                        else
+                            grid_MtD_depths[g][9] = grid_MtD_depths[g][9] + dem_res**2
 
         nline += 1
 
