@@ -118,15 +118,15 @@ for g in range(1,n500grid+1):
     grid_pct_edge[g] = 0.0
 
     grid_Gdw_depths[g] = []
-    for Gdw_bin in range(0,Gdw_bin_n + 1):
+    for Gdw_bin in range(1,Gdw_bin_n + 1):
         grid_Gdw_depths[g][Gdw_bin] = 0.0
         
     grid_GwT_depths[g] = []
-    for GwT_bin in range(0,GwT_bin_n + 1):
+    for GwT_bin in range(1,GwT_bin_n + 1):
         grid_GwT_depts[g][GwT_bin] = 0.0
         
     grid_MtD_depths[g] = []    
-    for MtD_bin in range(0,MtD_bin_n + 1):
+    for MtD_bin in range(1,MtD_bin_n + 1):
         grid_MtD_depths[g][MtD_bin] = 0.0
     
 for c in range(1,ncomp+1):                           
@@ -348,7 +348,7 @@ with open(grid_Gdw_dep_file, mode='w') as Gdw:
     Gdw.write('GRID_ID,VALUE_0,VALUE_4,VALUE_8,VALUE_12,VALUE_18,VALUE_22,VALUE_28,VALUE_32,VALUE_36,VALUE_40,VALUE_44,VALUE_78,VALUE_150,VALUE_151\n')
     for g in grid_Gdw_depths.keys():
         linewrite = '%d' % g
-        for Gdw_bin in range(0,Gdw_bin_n + 1):
+        for Gdw_bin in range(1,Gdw_bin_n + 1):
             linewrite = '%s,%d' % (linewrite,grid_Gdw_depths[g][Gdw_bin])
         Gdw.write('%s\n' % linewrite)
 
@@ -356,7 +356,7 @@ with open(grid_GwT_dep_file, mode='w') as GwT:
     GwT.write('GRID_ID,VALUE_0,VALUE_6,VALUE_18,VALUE_22,VALUE_26,VALUE_30,VALUE_34,VALUE_100,VALUE_101\n')
     for g in grid_GwT_depths.keys():
         linewrite = '%d' % g
-        for GwT_bin in range(0,GwT_bin_n + 1):
+        for GwT_bin in range(1,GwT_bin_n + 1):
             linewrite = '%s,%d' % (linewrite,grid_GwT_depths[g][GwT_bin])
         GwT.write('%s\n' % linewrite)
 
@@ -364,6 +364,6 @@ with open(grid_MtD_dep_file, mode='w') as MtD:
     MtD.write('GRID_ID,VALUE_0,VALUE_8,VALUE_30,VALUE_36,VALUE_42,VALUE_46,VALUE_50,VALUE_56,VALUE_57\n')
     for g in grid_MtD_depths.keys():
         linewrite = '%d' % g
-        for MtD_bin in range(0,MtD_bin_n + 1):
+        for MtD_bin in range(1,MtD_bin_n + 1):
             linewrite = '%s,%d' % (linewrite,grid_MtD_depths[g][MtD_bin])
         MtD.write('%s\n' % linewrite)
