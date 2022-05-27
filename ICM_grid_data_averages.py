@@ -345,6 +345,7 @@ with open(comp_upl_file, mode='w') as cuf:
         cuf.write( '%d,%0.4f\n' % (c,comp_pct_upland[c]) )
 
 with open(grid_Gdw_dep_file, mode='w') as Gdw:    
+    print('     - %s' % grid_Gdw_dep_file)
     Gdw.write('GRID_ID,VALUE_0,VALUE_4,VALUE_8,VALUE_12,VALUE_18,VALUE_22,VALUE_28,VALUE_32,VALUE_36,VALUE_40,VALUE_44,VALUE_78,VALUE_150,VALUE_151\n')
     for g in grid_Gdw_depths.keys():
         linewrite = '%d' % g
@@ -353,6 +354,7 @@ with open(grid_Gdw_dep_file, mode='w') as Gdw:
         Gdw.write('%s\n' % linewrite)
 
 with open(grid_GwT_dep_file, mode='w') as GwT:
+    print('     - %s' % grid_GwT_dep_file)
     GwT.write('GRID_ID,VALUE_0,VALUE_6,VALUE_18,VALUE_22,VALUE_26,VALUE_30,VALUE_34,VALUE_100,VALUE_101\n')
     for g in grid_GwT_depths.keys():
         linewrite = '%d' % g
@@ -361,9 +363,16 @@ with open(grid_GwT_dep_file, mode='w') as GwT:
         GwT.write('%s\n' % linewrite)
 
 with open(grid_MtD_dep_file, mode='w') as MtD:
+    print('     - %s' % grid_MtD_dep_file)
     MtD.write('GRID_ID,VALUE_0,VALUE_8,VALUE_30,VALUE_36,VALUE_42,VALUE_46,VALUE_50,VALUE_56,VALUE_57\n')
     for g in grid_MtD_depths.keys():
         linewrite = '%d' % g
         for MtD_bin in range(1,MtD_bin_n + 1):
             linewrite = '%s,%d' % (linewrite,grid_MtD_depths[g][MtD_bin])
         MtD.write('%s\n' % linewrite)
+
+        
+print(' Deleting output file: %s' % out_file)
+os.remove(out_file)
+      
+      
