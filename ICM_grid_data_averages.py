@@ -117,15 +117,15 @@ for g in range(1,n500grid+1):
     grid_pct_edge_all[g] = []      
     grid_pct_edge[g] = 0.0
 
-    grid_Gdw_depths[g] = []
+    grid_Gdw_depths[g] = {}
     for Gdw_bin in range(1,Gdw_bin_n + 1):
         grid_Gdw_depths[g][Gdw_bin] = 0.0
         
-    grid_GwT_depths[g] = []
+    grid_GwT_depths[g] = {}
     for GwT_bin in range(1,GwT_bin_n + 1):
-        grid_GwT_depts[g][GwT_bin] = 0.0
+        grid_GwT_depths[g][GwT_bin] = 0.0
         
-    grid_MtD_depths[g] = []    
+    grid_MtD_depths[g] = {}    
     for MtD_bin in range(1,MtD_bin_n + 1):
         grid_MtD_depths[g][MtD_bin] = 0.0
     
