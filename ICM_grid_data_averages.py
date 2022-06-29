@@ -313,11 +313,11 @@ grid_Gdw_dep_file   = '%s/%s/%s/hsi/GadwallDepths_cm_%d.csv' % (par_dir, sterm, 
 grid_GwT_dep_file   = '%s/%s/%s/hsi/GWTealDepths_cm__%d.csv' % (par_dir, sterm, gterm, year)
 grid_MtD_dep_file   = '%s/%s/%s/hsi/MotDuckDepths_cm_%d.csv' % (par_dir, sterm, gterm, year)
 
-grid_data_file     = new_grid_filepath  
+griddata_file     = new_grid_filepath  
 
 print('Writing output files:')
-with open(grid_data_file,mode='w') as gdaf:  
-    print('     - %s' % grid_data_file)
+with open(griddata_file,mode='w') as gdaf:  
+    print('     - %s' % griddata_file)
     gdaf.write('GRID,MEAN_BED_ELEV,MEAN_LAND_ELEV,PERCENT_LAND_0-100,PERCENT_WETLAND_0-100,PERCENT_WATER_0-100\n')
     for g in grid_bed_z.keys():
         gdaf.write('%d,%0.4f,%0.4f,%0.2f,%0.2f,%0.2f\n' % (g,grid_bed_z[g],grid_land_z[g],grid_pct_land[g],grid_pct_land_wetl[g],grid_pct_water[g]) )
