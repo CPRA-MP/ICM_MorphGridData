@@ -13,6 +13,7 @@ rterm = 'SLA'
 startyear = 2019
 year = int(sys.argv[3])
 elapsedyear = year - startyear +1
+backup_files = 1    #if set to 1, the existing grid summary files will be copied (by adding a *.old suffix); if set to 0, any existing files will be over-written
 
 print('\nPreparing summary files for grid and compartment zonal statistics for %s %s - %d' % (sterm, gterm,year) )
 
@@ -314,6 +315,12 @@ grid_GwT_dep_file   = '%s/%s/%s/hsi/GWTealDepths_cm__%d.csv' % (par_dir, sterm, 
 grid_MtD_dep_file   = '%s/%s/%s/hsi/MotDuckDepths_cm_%d.csv' % (par_dir, sterm, gterm, year)
 
 griddata_file     = new_grid_filepath  
+
+if backup_files == 1:
+    backup_file_list = [comp_elev_file,comp_wat_file,comp_upl_file,grid_pct_edge_file,grid_Gdw_dep_file,grid_GwT_dep_file,grid_MtD_dep_file,grid_data_file]
+    for bf in backup_file_list:
+        os.rename(bf,'%s.old' % bf)
+
 
 print('Writing output files:')
 with open(griddata_file,mode='w') as gdaf:  
